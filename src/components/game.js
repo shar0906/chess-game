@@ -22,10 +22,13 @@ export default class Game extends React.Component {
     const squares = this.state.squares.slice();
     
     if(this.state.sourceSelection === -1){
-      if(!squares[i] || squares[i].player !== this.state.player) {
+      if(!squares[i] || squares[i].player !== this.state.player){
         this.setState({status: "Wrong selection. Choose player " + this.state.player + " pieces."});
-        // squares[i] ? delete squares[i].style.backgroundColor : null;
-      } else {
+        if (squares[i]) {
+          squares[i].style = {...squares[i].style, backgroundColor: ""};
+        }
+      }
+      else{
         squares[i].style = {...squares[i].style, backgroundColor: "RGB(111,143,114)"}; // Emerald from http://omgchess.blogspot.com/2015/09/chess-board-color-schemes.html
         this.setState({
           status: "Choose destination for the selected piece",
@@ -35,7 +38,7 @@ export default class Game extends React.Component {
     }
 
     else if(this.state.sourceSelection > -1){
-      delete squares[this.state.sourceSelection].style.backgroundColor;
+      squares[this.state.sourceSelection].style = {...squares[this.state.sourceSelection].style, backgroundColor: ""};
       if(squares[i] && squares[i].player === this.state.player){
         this.setState({
           status: "Wrong selection. Choose valid source and destination again.",
@@ -61,8 +64,6 @@ export default class Game extends React.Component {
               blackFallenSoldiers.push(squares[i]);
             }
           }
-          console.log("whiteFallenSoldiers", whiteFallenSoldiers) ;
-          console.log("blackFallenSoldiers", blackFallenSoldiers);
           squares[i] = squares[this.state.sourceSelection];
           squares[this.state.sourceSelection] = null;
           let player = this.state.player === 1? 2: 1;
@@ -136,6 +137,10 @@ export default class Game extends React.Component {
         <div className="icons-attribution">
           <div> <small> Chess Icons And Favicon (extracted) By en:User:Cburnett [<a href="http://www.gnu.org/copyleft/fdl.html">GFDL</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a>, <a href="http://opensource.org/licenses/bsd-license.php">BSD</a> or <a href="http://www.gnu.org/licenses/gpl.html">GPL</a>], <a href="https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces">via Wikimedia Commons</a> </small></div>
         </div>
+        <ul>
+          <li><a href="https://github.com/TalhaAwan/react-chess" target="_blank">Source Code</a> </li>
+          <li><a href="https://www.techighness.com/post/develop-two-player-chess-game-with-react-js/">Blog Post</a></li>
+        </ul> 
       </div>
 
      
